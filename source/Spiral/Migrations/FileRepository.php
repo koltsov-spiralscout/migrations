@@ -158,7 +158,9 @@ class FileRepository implements RepositoryInterface
      */
     private function getFiles(): \Generator
     {
-        foreach ($this->files->getFiles($this->config['directory'], '*.php') as $filename) {
+        $migrationFiles = $this->files->getFiles($this->config['directory'], '*.php');
+        sort($migrationFiles);
+        foreach ($migrationFiles as $filename) {
             $reflection = $this->tokenizer->fileReflection($filename);
 
             $definition = explode('_', basename($filename));
